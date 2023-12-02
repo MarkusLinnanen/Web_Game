@@ -1,5 +1,11 @@
 import json
+import mysql
+import mysql.connector
 
+cnx = mysql.connector.connect(user='userguy', password='pw0rd',
+                              host='localhost',
+                              database='fishbase')
+cursor = cnx.cursor(dictionary = True)
 # Structure of the player json file
 # {
 # "name" : "Name of player",
@@ -15,3 +21,27 @@ import json
 #
 #
 #}
+
+class player:
+    def __init__(self, name):
+        self.name = name
+
+    def getPole(self):
+        cursor.execute("SELECT poleName, poleStrAmount, poleCond FROM player WHERE name = %s", {self.name,})
+        res = cursor.fetchall()[0]
+        return res
+
+    def getString(self):
+        cursor.execute("SELECT string.name breakPercent FROM player, string WHERE player.name = %s AND string.name = player.string", {self.name,})
+        res = cursor.fetchall()[0]
+        return res
+
+    def getInfo(self):
+        cursor.execute("SELECT * FROM player WHERE name = %s", {self.name,})
+        res = cursor.fetchall()[0]
+        return res
+
+    def getLocation(self):
+        cursor.execute("SELECT country.name imageLink FROM player, country WHERE player.name = %s AND country.name = player.location", {self.name,})
+        res = cursor.fetchall()[0]
+        return res
