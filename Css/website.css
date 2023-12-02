@@ -1,0 +1,85 @@
+html {
+    font-family: Arial, sans-serif;
+    background-color: rgba(0, 125, 133, 0.7);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    background-color: #00777c;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/*Navigation buttons*/
+
+.navButton {
+    text-decoration: none;
+    border: transparent;
+    padding: 1rem;
+    width: 8rem;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+    background-color: #0e4175;
+}
+
+.navButton:hover {
+    background-color: rgba(0, 0, 51, 0.71);
+}
+
+.navButton:active {
+    background-color: black;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.secondaryBox {display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px;
+    background-color: #fff;
+    z-index: 2;
+}
+
+.secondaryBoxContent {
+    text-align: center;
+}
+
+/*Close buttons*/
+
+.closeButton {
+    text-decoration: none;
+    border-color: black;
+    border-width: 1px;
+    padding: 0.5rem;
+    background-color: #0e4175;
+}
+
+.closeButton:hover {
+    background-color: rgba(0, 0, 51, 0.71);
+}
+
+.closeButton:active {
+    background-color: black;
+}
+
