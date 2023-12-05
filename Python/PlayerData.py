@@ -10,8 +10,14 @@ class player:
     def __init__(self, name):
         self.name = name
         # make the player row in the database
-        cursor.execute("INSERT INTO player (name) VALUES (%s)", (self.name,))
-        cnx.commit()
+        cursor.execute("SELECT * FROM player WHERE name = %s", (self.name,))
+        if not cursor.fetchall():
+            cursor.execute("INSERT INTO player (name) VALUES (%s)", (self.name,))
+            cursor.execute("SELECT ID FROM fish")
+            for num in cursor:
+                cursor.execute("INSERT INTO caught (fish, player) VALUES (%s, %s)", (num["ID"], self.name))
+            cnx.commit()
+
         cursor.execute("SELECT * FROM player WHERE name = %s", (self.name, ))
         self.vals = cursor.fetchall()[0]
 
@@ -38,7 +44,8 @@ class player:
         cursor.execute("UPDATE player SET name = %s, poleStrAmount = %s, poleCond  = %s, bait = %s, string = %s, luck = %s, location = %s WHERE name = %s", argDict)
         cnx.commit()
 
-p = player("Markus")
+
+p = player("John")
 print(p.vals["name"])
 cursor.close()
 cnx.close()
