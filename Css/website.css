@@ -20,7 +20,7 @@ ul {
     justify-content: space-evenly;
 }
 
-/*Navigation buttons*/
+/*----Navigation buttons----*/
 
 .navButton {
     text-decoration: none;
@@ -65,7 +65,15 @@ ul {
     text-align: center;
 }
 
-/*Close buttons*/
+#proBox .secondaryBoxContent {
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-start;
+}
+
+/*----Close buttons----*/
 
 .closeButton {
     text-decoration: none;
@@ -83,3 +91,8 @@ ul {
     background-color: black;
 }
 
+/*----Fishes----*/
+
+.fishItem {
+    margin-bottom: 1rem;
+}
