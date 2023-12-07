@@ -1,4 +1,3 @@
-import json
 import mysql.connector
 
 cnx = mysql.connector.connect(user='userguy', password='pw0rd',
@@ -47,5 +46,6 @@ class player:
 
 p = player("John")
 print(p.vals["name"])
+
 cursor.close()
 cnx.close()

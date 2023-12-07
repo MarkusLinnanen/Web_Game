@@ -1,10 +1,4 @@
-import json
-
-import flask
 import mysql.connector
-from flask import Flask, request
-
-app = Flask(__name__)
 
 cnx = mysql.connector.connect(user='userguy', password='pw0rd',
                               host='localhost',
@@ -30,16 +24,6 @@ class shop:
         #with open("../JSON/shop.json", 'w') as shopjson:
         #    json.dump(self.stock, shopjson)
 
-s = shop()
-
-@app.route("/shopStock", methods=['GET'])
-def stockAsJson():
-    stock = flask.jsonify(s.stock)
-    stock.headers.add('Access-Control-Allow-Origin', '*') # * meinaa kaikkia nettisivuja, vaihdetaan se sit sen kalastussivun osotteeksi
-    return stock
-
-if __name__ == '__main__':
-    app.run(use_reloader=True, host='127.0.0.1', port=3000)
 
 cursor.close()
 cnx.close()

@@ -1,8 +1,16 @@
-async function printShopToJSON(){
-  const response = await fetch("http://127.0.0.1:3000/shopStock");
-  if(!response.ok) throw new Error("error in response!");
-  const jsonData = await response.json();
-  console.log(jsonData);
-  return response;
+function runPyScript(input){
+    let jqXHR = $.ajax({
+        type: "POST",
+        url: "http://127.0.0.1:3000/login",
+        async: false,
+        data: { mydata: input }
+    });
+
+    return jqXHR.responseText;
 }
-ret = printShopToJSON();
+
+$('#submitbutton').click(function(){
+    datatosend = 'this is my matrix';
+    result = runPyScript(datatosend);
+    console.log('Got back ' + result);
+});
