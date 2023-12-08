@@ -21,17 +21,16 @@ async function playerLogin(){
         const ipResponse = await fetch("https://api.ipify.org?format=json");    // starting data download, fetch returns a promise which contains an object of type 'response'
         if (!ipResponse.ok) throw new Error('IP not Got!');
         const jsonData = await ipResponse.json();
-
-        //console.log(jsonData.ip);
         const data  = {
             body: JSON.stringify({name: jsonData.ip}),
             method: 'POST',
             headers:{
                 'Access-Control-Allow-Origin' : '*',
+                'Content Type' : 'application/json',
             },
         }
         try{
-            const dataResponse = await fetch('http://127.0.0.1:3000/playerInfo', data);
+            const dataResponse = await fetch('http://127.0.0.1:3000/login', data);
             if (!dataResponse.ok) throw new Error('Player not posted!');
             const json = await dataResponse.json();
             console.log('result', json);
