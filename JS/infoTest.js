@@ -32,6 +32,6 @@ $('#submitbutton').click( async function(){
     const inf = await playerLogin();
     let datatosend = await getPlayerInfo();
     console.log(datatosend)
-    let result = await setPlayerInfo(datatosend);
+    let result = await setPlayerInfo(datatosend.json());
     //console.log(result);
 });

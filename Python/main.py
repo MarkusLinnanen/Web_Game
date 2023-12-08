@@ -50,12 +50,8 @@ def playerInfo():
     match request.method:
         case 'POST':
             req = request.form['mydata']
-            print(req)
+            #print(req)
             _player.setPlayer(req)
-            resp = jsonify('{"response": "Did the thing"}')
-            resp.headers.add('Access-Control-Allow-Origin', '*')
-            #resp.headers['Content-Type'] = "application/json"
-            return resp
         case 'GET':
             resp = jsonify(_player.getPlayer())
             resp.headers.add('Access-Control-Allow-Origin', '*')
@@ -68,5 +64,5 @@ def playerInfo():
 
 
 if __name__ == '__main__':
-    app.run(use_reloader=True, host='127.0.0.1', port=3000)
+    app.run(debug=True, use_reloader=True, host='127.0.0.1', port=3000)
 

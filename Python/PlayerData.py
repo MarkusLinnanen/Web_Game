@@ -31,11 +31,10 @@ class player:
 
     def getLocation(self):
         self.cursor.execute("SELECT country.name imageLink FROM player, country WHERE player.name = %s AND country.name = player.location", (self.name,))
-        res = self.cursor.fetchall()[0]
-        return res
+        return self.cursor.fetchall()[0]
 
-    def setPlayer(self):
-        argDict = self.vals
+    def setPlayer(self, arg):
+        argDict = dict(arg)
         argDict.update({"name2" : self.name})
         self.cursor.execute("UPDATE player SET name = %s, poleStrAmount = %s, poleCond  = %s, bait = %s, string = %s, luck = %s, location = %s WHERE name = %s", argDict)
         self.cnx.commit()

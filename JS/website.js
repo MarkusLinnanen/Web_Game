@@ -1,7 +1,7 @@
 /*----Start of progress tab fish data----*/
 async function fetchFishData() {
     try {
-        const response = await fetch('JSON/SeOnVittuKALA.json');
+        const response = await fetch('JSON/kalat.json');
         const data = await response.json();
         return data;
     } catch (error) {
