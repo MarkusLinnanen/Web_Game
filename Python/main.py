@@ -14,16 +14,10 @@ app = Flask(__name__)
 _player = PlayerData.player(cursor, cnx, "")
 
 
-@app.route('/login', methods=['POST'])
-def login():
-    data = request.json
-    global _player
-    global cnx
-    global cursor
-    _player = PlayerData.player(cursor, cnx, data)
-    resp = jsonify(_player.vals)
-    resp.headers.add('Access-Control-Allow-Origin', '*')
-    return resp
+def login(name):
+    global _player, cnx, cursor
+    _player = PlayerData.player(cursor, cnx, name)
+    return _player.vals
 
 
 @app.route("/shopStock", methods=['GET'])
@@ -36,8 +30,7 @@ def stockAsJson():
 
 @app.route("/close", methods=['GET'])
 def closeSite():
-    global cursor
-    global cnx
+    global cursor, cnx
     cursor.close()
     cnx.close()
 
@@ -55,6 +48,22 @@ def playerInfo():
             #resp.headers['Content-Type'] = "application/json"
             return resp
 
+@app.route('/runFunction', methods=['POST'])
+def run_python_function():
+    data = request.json  # Assumes the data sent from JavaScript is in JSON format
+
+    # Extract the function name and arguments from the request
+    function_name = data.get('function_name')
+    arguments = data.get('arguments', [])
+
+    # Execute the Python function dynamically
+    try:
+        result = globals()[function_name](*arguments)
+        response = {'result': result}
+    except Exception as e:
+        response = {'error': str(e)}
+
+    return jsonify(response)
 
 #@app.route("/fishInfo", methods=['GET', 'POST'])
 #def fishInfo():
