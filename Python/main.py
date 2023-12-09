@@ -16,12 +16,13 @@ _player = PlayerData.player(cursor, cnx, "")
 
 @app.route('/login', methods=['POST'])
 def login():
-    datafromjs = request.form['name']
+    data = request.json
     global _player
     global cnx
     global cursor
-    _player = PlayerData.player(cursor, cnx, datafromjs)
+    _player = PlayerData.player(cursor, cnx, data)
     resp = jsonify(_player.vals)
+    resp.headers.add('Access-Control-Allow-Origin', '*')
     return resp
 
 

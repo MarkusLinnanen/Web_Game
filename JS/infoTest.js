@@ -1,32 +1,22 @@
 'use strict';
 async function setPlayerInfo(input){
-    return await $.ajax({
-        type: "POST",
-        url: "http://127.0.0.1:3000/playerInfo",
-        async: true,
-        data: { mydata: input }
-    });
+
 }
 
 async function getPlayerInfo(){
-    return await $.ajax({
-        type: "GET",
-        url: "http://127.0.0.1:3000/playerInfo/" + ,
-        async: true
-    });
+
 }
 async function playerLogin(){
     var ret = 0;
     try {
-        const ipResponse = await fetch("https://api.ipify.org?format=json");    // starting data download, fetch returns a promise which contains an object of type 'response'
-        if (!ipResponse.ok) throw new Error('IP not Got!');
-        const jsonData = await ipResponse.json();
+        //const ipResponse = await fetch("https://api.ipify.org?format=json");    // starting data download, fetch returns a promise which contains an object of type 'response'
+        //if (!ipResponse.ok) throw new Error('IP not Got!');
+        //const jsonData = await ipResponse.json();
         const data  = {
-            body: JSON.stringify({name: jsonData.ip}),
+            body: JSON.stringify({name: 5}),
             method: 'POST',
             headers:{
-                'Access-Control-Allow-Origin' : '*',
-                'Content Type' : 'application/json',
+                'Access-Control-Allow-Origin' : '*'
             },
         }
         try{
@@ -45,13 +35,8 @@ async function playerLogin(){
     return ret;
 }
 
-$('#submitbutton').click( async function(){
-    const playerID = await playerLogin();
-    //let datatosend = await getPlayerInfo();
-    //console.log(datatosend)
-    //let result = await setPlayerInfo(datatosend.json());
-    //console.log(result);
-});
+
+const playerID = playerLogin();
 
 //    // ... prevent the default action.
 //     evt.preventDefault();
