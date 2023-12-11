@@ -49,12 +49,12 @@ def playerInfo():
             return resp
 
 @app.route('/runFunction', methods=['POST'])
-def run_python_function():
-    data = request.json  # Assumes the data sent from JavaScript is in JSON format
+def run_python_function(function_name, arguments):
+    #data = request.json  # Assumes the data sent from JavaScript is in JSON format
 
     # Extract the function name and arguments from the request
-    function_name = data.get('function_name')
-    arguments = data.get('arguments', [])
+    #function_name = data.get('function_name')
+    #arguments = data.get('arguments', [])
 
     # Execute the Python function dynamically
     try:
@@ -68,6 +68,13 @@ def run_python_function():
 #@app.route("/fishInfo", methods=['GET', 'POST'])
 #def fishInfo():
 
+def catchFish(plrID):
+    global cursor, cnx
+    cursor.execute("UPDATE caught SET caught = 1 WHERE player = %s", (plrID))
+    cnx.commit()
+
+out = run_python_function(login, ["david"])
+print(out)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True, host='127.0.0.1', port=3000)
