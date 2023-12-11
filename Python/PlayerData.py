@@ -42,3 +42,4 @@ class player:
     def getMoney(self):
         self.cursor.execute("SELECT money FROM player WHERE name = %s", (self.name,))
         return self.cursor.fetchall()[0]
+

@@ -63,17 +63,25 @@ def run_python_function(function_name, arguments):
     except Exception as e:
         response = {'error': str(e)}
 
-    return jsonify(response)
+    return response
 
-#@app.route("/fishInfo", methods=['GET', 'POST'])
-#def fishInfo():
 
-def catchFish(plrID):
+def fishInfo():
+    global cursor
+    cursor.execute("SELECT * FROM fish")
+    return cursor.fetchall()
+
+# May be needed
+def GetPlayer(playerName):
     global cursor, cnx
-    cursor.execute("UPDATE caught SET caught = 1 WHERE player = %s", (plrID))
+    return PlayerData.player(cursor, cnx, playerName)
+
+def catchFish(plrName):
+    global cursor, cnx
+    cursor.execute("UPDATE caught SET caught = 1 WHERE player = %s", (plrName))
     cnx.commit()
 
-out = run_python_function(login, ["david"])
+out = run_python_function("GetPlayer", ["john"])['result'].vals
 print(out)
 
 if __name__ == '__main__':
