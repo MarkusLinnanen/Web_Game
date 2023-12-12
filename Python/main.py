@@ -2,8 +2,9 @@ import mysql.connector
 import PlayerData
 import Fish
 import Shop
-from flask import Flask, render_template, redirect, url_for,request
-from flask import make_response, jsonify
+from flask import Flask, redirect, url_for, requestmake_response, jsonify
+import random
+import Inventory
 
 cnx = mysql.connector.connect(user='userguy', password='pw0rd',
                               host='localhost',
@@ -76,12 +77,9 @@ def GetPlayer(playerName):
     global cursor, cnx
     return PlayerData.player(cursor, cnx, playerName)
 
-def catchFish(plrName):
-    global cursor, cnx
-    cursor.execute("UPDATE caught SET caught = 1 WHERE player = %s", (plrName))
-    cnx.commit()
 
-out = run_python_function("GetPlayer", ["john"])['result'].vals
+# result index at end is required to get the player and not the result of the function
+out = run_python_function("GetPlayer", ["john"])['result']
 print(out)
 
 if __name__ == '__main__':
