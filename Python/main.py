@@ -20,14 +20,17 @@ cursor = cnx.cursor(dictionary = True)
 _player = PlayerData.player(cursor, cnx, "")
 
 def login(name):
-    global _player, cnx, cursor
+    global cnx, cursor
     return PlayerData.player(cursor, cnx, name).vals
+
+def getPlayer(name):
+    global cnx, cursor
+    return PlayerData.player(cursor, cnx, name)
 
 def stockAsJson():
     s = Shop.shop()
     stock = jsonify(s.stock)
     return stock
-
 
 
 def closeSite():

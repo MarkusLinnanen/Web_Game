@@ -17,5 +17,7 @@ async function runFunction(functionName, args) {
         }),
     });
     console.log(functionName + ": Done");
-    return await response.json();
+    const resJSON = await response.json();
+    console.log(resJSON)
+    return resJSON;
 }
