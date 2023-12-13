@@ -1,13 +1,6 @@
-import mysql.connector
-
-cnx = mysql.connector.connect(user='userguy', password='pw0rd',
-                              host='localhost',
-                              database='fishbase')
-cursor = cnx.cursor(dictionary=True)
-
-
 class shop:
     def __init__(self):
+        global cursor, cnx
         self.stock = {"items": [], "itemCount": 0}
         cursor.execute("SELECT * FROM bait", {})
         baits = cursor.fetchall()
@@ -24,7 +17,3 @@ class shop:
         self.stock["itemCount"] = len(self.stock["items"])
         # with open("../JSON/shop.json", 'w') as shopjson:
         #    json.dump(self.stock, shopjson)
-
-
-cursor.close()
-cnx.close()
