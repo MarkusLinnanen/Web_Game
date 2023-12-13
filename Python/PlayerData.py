@@ -22,7 +22,7 @@ class player:
         return self.cursor.fetchall()[0]
 
     def getString(self):
-        self.cursor.execute("SELECT string.name breakPercent FROM player, string WHERE player.name = %s AND string.name = player.string", (self.name,))
+        self.cursor.execute("SELECT string.name, breakPercent FROM player, string WHERE player.name = %s AND string.name = player.string", (self.name,))
         return self.cursor.fetchall()[0]
 
     def getPlayer(self):
@@ -30,7 +30,7 @@ class player:
         return self.cursor.fetchall()[0]
 
     def getLocation(self):
-        self.cursor.execute("SELECT country.name imageLink FROM player, country WHERE player.name = %s AND country.name = player.location", (self.name,))
+        self.cursor.execute("SELECT country.name, imageLink FROM player, country WHERE player.name = %s AND country.name = player.location", (self.name,))
         return self.cursor.fetchall()[0]
 
     def setPlayer(self, arg):
@@ -42,3 +42,14 @@ class player:
     def getMoney(self):
         self.cursor.execute("SELECT money FROM player WHERE name = %s", (self.name,))
         return self.cursor.fetchall()[0]
+
+
+def deletePlayer(name):
+    global cursor, cnx
+    cursor.execute("DELETE FROM caught WHERE player = %s", (name,))
+    cursor.execute("DELETE FROM inventory WHERE player = %s", (name,))
+    cursor.execute("DELETE FROM player WHERE name = %s", (name,))
+    cnx.commit()
+    return {"execution" : "success"}
+
+

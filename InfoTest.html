@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Testing python to website</title>
-    <script src="JS/infoTest.js" defer></script>
+    <script src="JS/infoTest.js" defer>
+    </script>
 </head>
 <body>
-<input id="submitbutton" type="submit" value="Test Send Data">
+<input id="submitbutton" type="submit" value="Test Delete Data" onclick="runFunction('deletePlayer', [_playerName])">
+<input id="submitbutton" type="submit" value="Test Send Data" onclick="runFunction('login', [_playerName])">
 </body>
 </html>
