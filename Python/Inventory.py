@@ -13,6 +13,6 @@ def MakeInv(player):
 
 def SetInv(player, invDict):
     invDict.update({"name" : player.name})
-    player.cursor.execute("UPDATE inventory SET player = %s, val1 = %s, val2 = %s, val3 = %s, val4 = %s, val5 = %s, val6 = %s WHERE player = %s", invDict)
+    player.cursor.execute("UPDATE inventory SET player = %s, bigLure = %s, smallLure = %s, worms = %s, normalLine = %s, wornLine = %s, strongLine = %s WHERE player = %s", invDict)
     player.cnx.commit()
     return GetInv(player)

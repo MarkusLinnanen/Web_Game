@@ -34,7 +34,6 @@ def stockAsJson():
     stock = jsonify(s.stock)
     return stock
 
-
 def closeSite():
     global cursor, cnx
     cursor.close()
@@ -47,6 +46,8 @@ def updateLocation(playerName, countryName):
     cursor.execute("SELECT imageLink FROM country WHERE name = %s", (countryName,))
     return cursor.fetchall()[0]
 
+def deletePlayer(playerName):
+    getPlayer(playerName).deletePlayer()
 
 @app.route('/runFunction', methods=['POST'])
 def run_python_function():

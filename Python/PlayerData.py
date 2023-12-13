@@ -1,5 +1,8 @@
 # This whole class was a developmental oversight and makes code more complex than it needs to be
 # When the getPlayer Function is being used it is being used so we can get a player class object by name only
+
+import Inventory
+
 class player:
     def __init__(self, cursor, con, name = ""):
         self.name = name
@@ -15,6 +18,7 @@ class player:
             for num in cursor:
                 self.cursor.execute("INSERT INTO caught (fish, player) VALUES (%s, %s)", (num["ID"], self.name))
             self.cnx.commit()
+            Inventory.MakeInv(self)
 
         self.cursor.execute("SELECT * FROM player WHERE name = %s", (self.name, ))
         self.vals = cursor.fetchall()[0]
