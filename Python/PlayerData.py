@@ -1,3 +1,5 @@
+# This whole class was a developmental oversight and makes code more complex than it needs to be
+# When the getPlayer Function is being used it is being used so we can get a player class object by name only
 class player:
     def __init__(self, cursor, con, name = ""):
         self.name = name
@@ -42,14 +44,12 @@ class player:
     def getMoney(self):
         self.cursor.execute("SELECT money FROM player WHERE name = %s", (self.name,))
         return self.cursor.fetchall()[0]
-
-
-def deletePlayer(name):
-    global cursor, cnx
-    cursor.execute("DELETE FROM caught WHERE player = %s", (name,))
-    cursor.execute("DELETE FROM inventory WHERE player = %s", (name,))
-    cursor.execute("DELETE FROM player WHERE name = %s", (name,))
-    cnx.commit()
-    return {"execution" : "success"}
+    def deletePlayer(self):
+        global cursor, cnx
+        cursor.execute("DELETE FROM caught WHERE player = %s", (self.name,))
+        cursor.execute("DELETE FROM inventory WHERE player = %s", (self.name,))
+        cursor.execute("DELETE FROM player WHERE name = %s", (self.name,))
+        cnx.commit()
+        return {"execution" : "success"}
 
 
