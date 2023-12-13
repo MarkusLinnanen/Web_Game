@@ -34,6 +34,12 @@ def stockAsJson():
     stock = jsonify(s.stock)
     return stock
 
+def catchFish(playerName, fishName):
+    global cursor, cnx
+    money = random.randint(5, 15)
+    cursor.execute("UPDATE caught, player SET caught = 1, money = %s WHERE player = %s AND fish = %s", (money, playerName, fishName))
+    cnx.commit()
+
 def closeSite():
     global cursor, cnx
     cursor.close()
@@ -70,6 +76,11 @@ def fishInfo():
     global cursor
     cursor.execute("SELECT * FROM fish")
     return cursor.fetchall()
+
+def isCaught(playerName, fishName):
+    global cursor
+    cursor.execute("SELECT caught FROM caught WHERE player = %s AND fish = %s", (playerName, fishName))
+    return cursor.fetchall()[0]
 
 
 

@@ -65,6 +65,29 @@ ul {
 
 .secondaryBoxContent {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.fishBox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.fishItem a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.fishItem a:hover {
+    font-weight: normal;
 }
 
 #proBox .secondaryBoxContent {
@@ -73,6 +96,13 @@ ul {
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: flex-start;
+}
+
+.fishItem img {
+    display: block;
+    height: auto;
+    border: 1px solid black;
+    border-radius: 4px;
 }
 
 /*----Close buttons----*/
@@ -221,4 +251,23 @@ ul {
 
 .button5:active {
     background-color: lightgray;
+}
+
+.itemBox{
+    margin-top: 5px;
+    width: 100px;
+    height: 100px;
+}
+
+.buyButton{
+    margin : 5px 5px;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: white;
+    background-color: #68848B;
+}
+.buyButton:hover {
+  box-shadow: 0 12px 12px 0 rgba(0,0,0,0.24), 0 17px 40px 0 rgba(0,0,0,0.19);
 }

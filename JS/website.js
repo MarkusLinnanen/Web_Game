@@ -10,21 +10,23 @@ async function fetchFishData() {
 }
 async function displayFishData() {
     const fishData = await fetchFishData();
-    const progressContent = document.querySelector('#proBox .secondaryBoxContent');
+    const progressContent = document.querySelector('#proBox .secondaryBoxContent .fishBox');
     fishData.forEach(fish => {
         const fishElement = document.createElement('div');
         fishElement.classList.add('fishItem');
-        fishElement.style.width = '5rem';
-        const fishName = document.createElement('h3');
-        fishName.textContent = fish.name;
-        const fishLink = document.createElement('a');
-        fishLink.href = fish.url;
-        fishLink.textContent = "Learn more";
+        fishElement.style.flex = '0.1 0.1 5%';
+        const fishNameLink = document.createElement('a');
+        fishNameLink.href = fish.url;
+        fishNameLink.textContent = fish.name;
+        fishNameLink.style.textDecoration = 'none';
         const fishImage = document.createElement('img');
         fishImage.src = fish.img_src_set['1.5x'];
-        fishElement.appendChild(fishName);
+        const fishCaught = fish.caught;
+        if (fishCaught < 1) {
+            fishImage.style.filter ='brightness(30%)';
+        }
+        fishElement.appendChild(fishNameLink);
         fishElement.appendChild(fishImage);
-        fishElement.appendChild(fishLink);
         progressContent.appendChild(fishElement);
     });
 }
