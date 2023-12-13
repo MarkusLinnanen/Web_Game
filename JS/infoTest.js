@@ -22,7 +22,12 @@ async function runFunction(functionName, args) {
     return resJSON;
 }
 
-function mapClick(playerName, countryName){
-    const res = runFunction("updateLocation", [playerName, countryName])
-    console.log(res)
+function setBgImage(link){
+    document.getElementById("bgImg").src = link;
 }
+
+function mapClick(playerName, countryName){
+    setBgImage(runFunction("updateLocation", [playerName, countryName]));
+}
+
+mapClick(_playerName, "Finland")
