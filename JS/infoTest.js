@@ -22,7 +22,7 @@ async function runFunction(functionName, args) {
     return resJSON;
 }
 
-function mapClick(countryName){
-    const res = runFunction("updateLocation", [countryName])
+function mapClick(playerName, countryName){
+    const res = runFunction("updateLocation", [playerName, countryName])
     console.log(res)
 }
