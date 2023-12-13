@@ -1,4 +1,7 @@
 'use strict';
+
+let _playerName = "dave";
+
 async function runFunction(functionName, args) {
     const url = 'http://127.0.0.1:3000/runFunction';
 
@@ -13,11 +16,6 @@ async function runFunction(functionName, args) {
             arguments: args,
         }),
     });
-
-    const result = await response.json();
-
-    console.log(result);
-    return result;
+    console.log(functionName + ": Done");
+    return await response.json();
 }
-
-//const playerID = runFunction("login", ["david"]);

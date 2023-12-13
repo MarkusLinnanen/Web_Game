@@ -19,40 +19,21 @@ cursor = cnx.cursor(dictionary = True)
 
 _player = PlayerData.player(cursor, cnx, "")
 
-
 def login(name):
     global _player, cnx, cursor
-    _player = PlayerData.player(cursor, cnx, name)
-    return _player.vals
+    return PlayerData.player(cursor, cnx, name).vals
 
-
-@app.route("/shopStock", methods=['GET'])
 def stockAsJson():
     s = Shop.shop()
     stock = jsonify(s.stock)
-    stock.headers.add('Access-Control-Allow-Origin', '*') # * meinaa kaikkia nettisivuja, vaihdetaan se sit sen kalastussivun osotteeksi
     return stock
 
 
-@app.route("/close", methods=['GET'])
+
 def closeSite():
     global cursor, cnx
     cursor.close()
     cnx.close()
-
-@app.route("/playerInfo", methods=['GET', 'POST'])
-def playerInfo():
-    global _player
-    match request.method:
-        case 'POST':
-            req = request.form['mydata']
-            #print(req)
-            _player.setPlayer(req)
-        case 'GET':
-            resp = jsonify(_player.getPlayer())
-            resp.headers.add('Access-Control-Allow-Origin', '*')
-            #resp.headers['Content-Type'] = "application/json"
-            return resp
 
 @app.route('/runFunction', methods=['POST'])
 def run_python_function():
@@ -77,10 +58,6 @@ def fishInfo():
     cursor.execute("SELECT * FROM fish")
     return cursor.fetchall()
 
-# May be needed
-def GetPlayer(playerName):
-    global cursor, cnx
-    return PlayerData.player(cursor, cnx, playerName).vals
 
 
 if __name__ == '__main__':
