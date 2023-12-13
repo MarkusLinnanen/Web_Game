@@ -24,6 +24,7 @@ def login(name):
     global cnx, cursor
     return PlayerData.player(cursor, cnx, name).vals
 
+# Used if only player name can be given but a player class object is needed (Python only!)
 def getPlayer(name):
     global cnx, cursor
     return PlayerData.player(cursor, cnx, name)
@@ -39,7 +40,7 @@ def closeSite():
     cursor.close()
     cnx.close()
 
-def updateLocation(countryName, playerName):
+def updateLocation(playerName, countryName):
     global cursor, cnx
     cursor.execute("UPDATE player SET location = %s WHERE name = %s", (countryName, playerName))
     cnx.commit()
@@ -56,11 +57,10 @@ def run_python_function():
     # Execute the Python function dynamically
     try:
         result = globals()[function_name](*arguments)
-        response = {'result': result}
     except Exception as e:
-        response = {'error': str(e)}
+        return {'error': str(e)}
 
-    return response
+    return result
 
 
 def fishInfo():
