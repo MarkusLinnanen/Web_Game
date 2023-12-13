@@ -21,3 +21,8 @@ async function runFunction(functionName, args) {
     console.log(resJSON)
     return resJSON;
 }
+
+function mapClick(countryName){
+    const res = runFunction("updateLocation", [countryName])
+    console.log(res)
+}

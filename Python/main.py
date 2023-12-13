@@ -44,7 +44,9 @@ def updateLocation(playerName, countryName):
     global cursor, cnx
     cursor.execute("UPDATE player SET location = %s WHERE name = %s", (countryName, playerName))
     cnx.commit()
-    return {"execution" : "success"}
+    cursor.execute("SELECT imageLink FROM country WHERE name = %s", (countryName,))
+    return cursor.fetchall()[0]
+
 
 @app.route('/runFunction', methods=['POST'])
 def run_python_function():
