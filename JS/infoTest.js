@@ -27,7 +27,8 @@ function setBgImage(link){
 }
 
 function mapClick(playerName, countryName){
-    setBgImage(runFunction("updateLocation", [playerName, countryName]));
+    let res = runFunction("updateLocation", [playerName, countryName]);
+    res.then(function(result){setBgImage(result["imageLink"]);});
 }
 
 mapClick(_playerName, "Finland")

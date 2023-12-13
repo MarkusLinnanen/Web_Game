@@ -1,6 +1,6 @@
 html {
     font-family: Arial, sans-serif;
-    background-color: rgba(0, 125, 133, 0.7);
+    background-color: #EEE7DA;
 }
 
 body {
@@ -9,7 +9,8 @@ body {
 }
 
 nav {
-    background-color: #00777c;
+    background-color: #AFC8AD;
+    border-bottom: 1px solid black;
 }
 
 ul {
@@ -23,21 +24,22 @@ ul {
 /*----Navigation buttons----*/
 
 .navButton {
+    cursor: pointer;
     text-decoration: none;
     border: transparent;
     padding: 1rem;
-    width: 8rem;
+    width: 12rem;
     border-left: 1px solid #000000;
     border-right: 1px solid #000000;
-    background-color: #0e4175;
+    background-color: #AFC8AD;
 }
 
 .navButton:hover {
-    background-color: rgba(0, 0, 51, 0.71);
+    background-color: #88AB8E;
 }
 
 .navButton:active {
-    background-color: black;
+    background-color: darkseagreen;
 }
 
 .overlay {
@@ -76,23 +78,147 @@ ul {
 /*----Close buttons----*/
 
 .closeButton {
-    text-decoration: none;
-    border-color: black;
-    border-width: 1px;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 4px;
     padding: 0.5rem;
-    background-color: #0e4175;
+    color: white;
+    background-color: #68848B;
 }
 
 .closeButton:hover {
-    background-color: rgba(0, 0, 51, 0.71);
+  box-shadow: 0 12px 12px 0 rgba(0,0,0,0.24), 0 17px 40px 0 rgba(0,0,0,0.19);
 }
 
 .closeButton:active {
-    background-color: black;
+    background-color: lightgray;
 }
 
 /*----Fishes----*/
 
 .fishItem {
     margin-bottom: 1rem;
+}
+
+/*----Map----*/
+
+.flexmap {
+  display: flex;
+}
+
+.destMap {
+    padding-bottom: 20px;
+}
+
+.flexbutton {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 40px;
+    padding-bottom: 20px;
+}
+
+.button1 {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 26px;
+    color: white;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 15px 52px;
+    width: 250px;
+    background-color: #68848B;
+}
+
+.button1:active {
+    background-color: lightgray;
+}
+
+.button1:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.button2 {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 26px;
+    color: white;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 15px 52px;
+    width: 250px;
+    background-color: #68848B;
+}
+
+.button2:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.button2:active {
+    background-color: lightgray;
+}
+
+.button3 {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 26px;
+    color: white;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 15px 52px;
+    width: 250px;
+    background-color: #68848B;
+}
+
+.button3:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.button3:active {
+    background-color: lightgray;
+}
+
+.button4 {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 26px;
+    color: white;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 15px 52px;
+    width: 250px;
+    background-color: #68848B;
+}
+
+.button4:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.button4:active {
+    background-color: lightgray;
+}
+
+.button5 {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 26px;
+    color: white;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 15px 52px;
+    width: 250px;
+    background-color: #68848B;
+}
+
+.button5:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.button5:active {
+    background-color: lightgray;
 }

@@ -46,8 +46,8 @@ def updateLocation(playerName, countryName):
     cursor.execute("SELECT imageLink FROM country WHERE name = %s", (countryName,))
     return cursor.fetchall()[0]
 
-def deletePlayer(playerName):
-    getPlayer(playerName).deletePlayer()
+def delPlayer(playerName):
+    return getPlayer(playerName).deletePlayer()
 
 @app.route('/runFunction', methods=['POST'])
 def run_python_function():
