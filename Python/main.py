@@ -1,6 +1,7 @@
 import mysql.connector
 import PlayerData
 import Fish
+import Map
 import Shop
 from flask import Flask, redirect, url_for, request, make_response, jsonify
 from flask_cors import CORS
@@ -37,6 +38,12 @@ def closeSite():
     global cursor, cnx
     cursor.close()
     cnx.close()
+
+def updateLocation(countryName, playerName):
+    global cursor, cnx
+    cursor.execute("UPDATE player SET location = %s WHERE name = %s", (countryName, playerName))
+    cnx.commit()
+    return {"execution" : "success"}
 
 @app.route('/runFunction', methods=['POST'])
 def run_python_function():
