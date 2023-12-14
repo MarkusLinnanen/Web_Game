@@ -1,6 +1,5 @@
 import mysql.connector
 import PlayerData
-import Fish
 import Map
 import Shop
 from flask import Flask, redirect, url_for, request, make_response, jsonify
@@ -16,9 +15,9 @@ app.config['CORS_HEADERS'] = 'Access-Control-Allow-Origin'
 cnx = mysql.connector.connect(user='userguy', password='pw0rd',
                               host='localhost',
                               database='fishbase')
-cursor = cnx.cursor(dictionary = True)
+cursor = cnx.cursor(dictionary=True, buffered=True)
 
-_player = PlayerData.player(cursor, cnx, "")
+#_player = PlayerData.player(cursor, cnx, "")
 
 
 #---Here are the player functions---#
@@ -31,6 +30,9 @@ def getPlayer(name):
     global cnx, cursor
     return PlayerData.player(cursor, cnx, name)
 
+def getPlayerLocation(name):
+    return getPlayer(name).getLocation()
+
 def updateLocation(playerName, countryName):
     global cursor, cnx
     cursor.execute("UPDATE player SET location = %s WHERE name = %s", (countryName, playerName))
@@ -41,12 +43,26 @@ def updateLocation(playerName, countryName):
 def delPlayer(playerName):
     return getPlayer(playerName).deletePlayer()
 
+def getPlayerMoney(playerName):
+    return getPlayer(playerName).getMoney()
+
 
 
 #---Here are the fish functions---#
 def fishInfo():
     global cursor
     cursor.execute("SELECT * FROM fish")
+
+    retList = cursor.fetchall()
+    retDict = {}
+    for val in retList:
+        retDict.update(val)
+
+    return retDict
+
+def getCaughtTable(playerName):
+    global cursor
+    cursor.execute("SELECT fish, caught FROM caught WHERE player = %s", (playerName,))
     return cursor.fetchall()
 
 def isCaught(playerName, fishName):
@@ -63,15 +79,19 @@ def catchFish(playerName, fishName):
 
 #---Here are the Shop & Inventory functions---#
 def getStock():
-    return Shop.shop().stock
-
+    global cursor, cnx
+    return Shop.shop(cursor, cnx).stock
 
 def itemHover(itemStr):
     return {"result":"hovering"}
 
 def shopBuy(itemStr):
     global cursor, cnx
-    res = getStock()
+    stck = getStock()
+    for itm in stck["items"]:
+        if itm["name"] == itemStr:
+            return {"price":itm["price"]}
+    return {"price" : 0}
 
 
 def invUse(itemStr):
@@ -86,6 +106,7 @@ def closeSite():
 
 @app.route('/runFunction', methods=['POST'])
 def run_python_function():
+    global cursor, cnx
     data = request.json  # Assumes the data sent from JavaScript is in JSON format
 
     # Extract the function name and arguments from the request
@@ -101,7 +122,6 @@ def run_python_function():
     return result
 
 
-
 if __name__ == '__main__':
+    sp = Shop.shop(cursor, cnx)
     app.run(debug=True, use_reloader=True, host='127.0.0.1', port=3000)
-

@@ -4,7 +4,7 @@
 import Inventory
 
 class player:
-    def __init__(self, cursor, con, name = ""):
+    def __init__(self, cursor, con, name):
         self.name = name
         self.cursor = cursor
         self.cnx = con
@@ -14,9 +14,10 @@ class player:
         self.cursor.execute("SELECT * FROM player WHERE name = %s", (self.name,))
         if not self.cursor.fetchall():
             self.cursor.execute("INSERT INTO player (name) VALUES (%s)", (self.name,))
-            self.cursor.execute("SELECT ID FROM fish")
-            for num in cursor:
-                self.cursor.execute("INSERT INTO caught (fish, player) VALUES (%s, %s)", (num["ID"], self.name))
+            self.cursor.execute("SELECT * FROM fish")
+            for fish in cursor.fetchall():
+                self.cursor.execute("INSERT INTO caught (fish, player) VALUES (%s, %s)", (fish["name"], self.name))
+
             self.cnx.commit()
             Inventory.MakeInv(self)
 
@@ -48,6 +49,7 @@ class player:
     def getMoney(self):
         self.cursor.execute("SELECT money FROM player WHERE name = %s", (self.name,))
         return self.cursor.fetchall()[0]
+
     def deletePlayer(self):
         self.cursor.execute("DELETE FROM caught WHERE player = %s", (self.name,))
         self.cursor.execute("DELETE FROM inventory WHERE player = %s", (self.name,))
