@@ -20,6 +20,8 @@ cursor = cnx.cursor(dictionary = True)
 
 _player = PlayerData.player(cursor, cnx, "")
 
+
+#---Here are the player functions---#
 def login(name):
     global cnx, cursor
     return PlayerData.player(cursor, cnx, name).vals
@@ -28,22 +30,6 @@ def login(name):
 def getPlayer(name):
     global cnx, cursor
     return PlayerData.player(cursor, cnx, name)
-
-def stockAsJson():
-    s = Shop.shop()
-    stock = jsonify(s.stock)
-    return stock
-
-def catchFish(playerName, fishName):
-    global cursor, cnx
-    money = random.randint(5, 15)
-    cursor.execute("UPDATE caught, player SET caught = 1, money = %s WHERE player = %s AND fish = %s", (money, playerName, fishName))
-    cnx.commit()
-
-def closeSite():
-    global cursor, cnx
-    cursor.close()
-    cnx.close()
 
 def updateLocation(playerName, countryName):
     global cursor, cnx
@@ -54,6 +40,48 @@ def updateLocation(playerName, countryName):
 
 def delPlayer(playerName):
     return getPlayer(playerName).deletePlayer()
+
+
+
+#---Here are the fish functions---#
+def fishInfo():
+    global cursor
+    cursor.execute("SELECT * FROM fish")
+    return cursor.fetchall()
+
+def isCaught(playerName, fishName):
+    global cursor
+    cursor.execute("SELECT caught FROM caught WHERE player = %s AND fish = %s", (playerName, fishName))
+    return cursor.fetchall()[0]
+
+def catchFish(playerName, fishName):
+    global cursor, cnx
+    money = random.randint(5, 15)
+    cursor.execute("UPDATE caught, player SET caught = 1, money = %s WHERE player = %s AND fish = %s", (money, playerName, fishName))
+    cnx.commit()
+
+
+#---Here are the Shop & Inventory functions---#
+def stockAsJson():
+    s = Shop.shop()
+    stock = jsonify(s.stock)
+    return stock
+
+def itemHover(itemStr):
+    print("hovering")
+
+def shopBuy(itemStr):
+    print(itemStr)
+
+def invUse(itemStr):
+    print(itemStr)
+
+
+def closeSite():
+    global cursor, cnx
+    cursor.close()
+    cnx.close()
+
 
 @app.route('/runFunction', methods=['POST'])
 def run_python_function():
@@ -70,17 +98,6 @@ def run_python_function():
         return {'error': str(e)}
 
     return result
-
-
-def fishInfo():
-    global cursor
-    cursor.execute("SELECT * FROM fish")
-    return cursor.fetchall()
-
-def isCaught(playerName, fishName):
-    global cursor
-    cursor.execute("SELECT caught FROM caught WHERE player = %s AND fish = %s", (playerName, fishName))
-    return cursor.fetchall()[0]
 
 
 
