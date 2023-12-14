@@ -46,6 +46,11 @@ def delPlayer(playerName):
 def getPlayerMoney(playerName):
     return getPlayer(playerName).getMoney()
 
+def getPlayerString(playerName):
+    return getPlayer(playerName).getString()
+
+def setPlayerMoney(playerName, moneyAmount):
+    return getPlayer(playerName).setMoney(moneyAmount)
 
 
 #---Here are the fish functions---#
@@ -70,11 +75,16 @@ def isCaught(playerName, fishName):
     cursor.execute("SELECT caught FROM caught WHERE player = %s AND fish = %s", (playerName, fishName))
     return cursor.fetchall()[0]
 
-def catchFish(playerName, fishName):
+def catchFish(playerName, countryName):
     global cursor, cnx
+    cursor.execute("SELECT name FROM fish WHERE country = %s", (countryName, ))
+    fish = cursor.fetchall()
+    fish = fish[random.randint(0, (len(fish) - 1))]
     money = random.randint(5, 15)
-    cursor.execute("UPDATE caught, player SET caught = 1, money = %s WHERE player = %s AND fish = %s", (money, playerName, fishName))
+    cursor.execute("UPDATE caught, player SET caught = 1, money = money + %s WHERE player = %s AND fish = %s", (money, playerName, fish["name"]))
     cnx.commit()
+    return fish
+
 
 
 #---Here are the Shop & Inventory functions---#
@@ -85,17 +95,13 @@ def getStock():
 def itemHover(itemStr):
     return {"result":"hovering"}
 
-def shopBuy(itemStr):
+def shopBuy(playerName, itemStr):
     global cursor, cnx
     stck = getStock()
     for itm in stck["items"]:
         if itm["name"] == itemStr:
-            return {"price":itm["price"]}
-    return {"price" : 0}
-
-
-def invUse(itemStr):
-    print(itemStr)
+            return setPlayerMoney(playerName, -itm["price"])
+    return getPlayerMoney(playerName)
 
 
 def closeSite():

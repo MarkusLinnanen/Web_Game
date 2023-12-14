@@ -50,11 +50,16 @@ class player:
         self.cursor.execute("SELECT money FROM player WHERE name = %s", (self.name,))
         return self.cursor.fetchall()[0]
 
+    def setMoney(self, money):
+        self.cursor.execute("UPDATE player SET money = money + %s WHERE name = %s", (money, self.name))
+        self.cnx.commit()
+        return self.getMoney()
+
     def deletePlayer(self):
         self.cursor.execute("DELETE FROM caught WHERE player = %s", (self.name,))
         self.cursor.execute("DELETE FROM inventory WHERE player = %s", (self.name,))
         self.cursor.execute("DELETE FROM player WHERE name = %s", (self.name,))
         self.cnx.commit()
-        return {"execution" : "success"}
+        return {"deletion" : "success"}
 
 

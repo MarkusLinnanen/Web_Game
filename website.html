@@ -15,13 +15,16 @@
                 <li><button class="navButton" data-target="invBox">Inventory</button></li>
                 <li><button class="navButton" data-target="mapBox">Map</button></li>
                 <li><button class="navButton" data-target="shoBox" onclick = "updateMoney()">Shop</button></li>
-                <li><button class="navButton" data-target="proBox">Progress</button></li>
+                <li><button class="navButton" data-target="proBox" onclick="console.log('heheheha')">Progress</button></li>
                 <li><button class="navButton" data-target="helBox">Help</button></li>
             </ul>
         </nav>
 
 
         <div id="game-page" class="maingame">
+            <div class="fishing">
+                <button class="fishButton" type="button" onclick="startFishing()">Cast your rod</button>
+            </div>
             <div id="footer-box" class="footmenu">
                 <div class="footerBox"></div>
             </div>
@@ -77,14 +80,14 @@
             <div class="secondaryBoxContent">
                 <h2>Shop</h2>
                 <div>
-                <button id = "itemBox0" class="itemBox" onclick="runFunction('shopBuy', ['Worms'])" style="background-image: url('images/shop/bait/worms.png')"></button>
-                <button id = "itemBox1" class="itemBox" onclick="runFunction('shopBuy', ['Small Lure'])" style="background-image: url('images/shop/bait/smallLure.png')"></button>
-                <button id = "itemBox2" class="itemBox" onclick="runFunction('shopBuy', ['Big Lure'])" style="background-image: url('images/shop/bait/bigLure.png')"></button>
+                <button id = "itemBox0" class="itemBox" onclick="runFunction('shopBuy', [_playerName, 'Worms'])" style="background-image: url('images/shop/bait/worms.png')"></button>
+                <button id = "itemBox1" class="itemBox" onclick="runFunction('shopBuy', [_playerName, 'Small Lure'])" style="background-image: url('images/shop/bait/smallLure.png')"></button>
+                <button id = "itemBox2" class="itemBox" onclick="runFunction('shopBuy', [_playerName, 'Big Lure'])" style="background-image: url('images/shop/bait/bigLure.png')"></button>
                 </div>
                 <div>
-                <button id = "itemBox3" class="itemBox" onclick="runFunction('shopBuy', ['Worn line'])"  style="background-image: url('images/shop/fishingLine/cheap.png')"></button>
-                <button id = "itemBox4" class="itemBox" onclick="runFunction('shopBuy', ['Normal line'])"  style="background-image: url('images/shop/fishingLine/normal.png')"></button>
-                <button id = "itemBox5" class="itemBox" onclick="runFunction('shopBuy', ['Strong line'])"  style="background-image: url('images/shop/fishingLine/expensive.png')"></button>
+                <button id = "itemBox3" class="itemBox" onclick="runFunction('shopBuy', [_playerName, 'Worn line'])"  style="background-image: url('images/shop/fishingLine/cheap.png')"></button>
+                <button id = "itemBox4" class="itemBox" onclick="runFunction('shopBuy', [_playerName, 'Normal line'])"  style="background-image: url('images/shop/fishingLine/normal.png')"></button>
+                <button id = "itemBox5" class="itemBox" onclick="runFunction('shopBuy', [_playerName, 'Strong line'])"  style="background-image: url('images/shop/fishingLine/expensive.png')"></button>
                 </div>
                 <div>
                 <button id = "itemBox6" class="itemBox"></button>
