@@ -15,5 +15,5 @@ class shop:
             self.stock["items"].append(string)
 
         self.stock["itemCount"] = len(self.stock["items"])
-        # with open("../JSON/shop.json", 'w') as shopjson:
-        #    json.dump(self.stock, shopjson)
+         with open("../JSON/shop.json", 'w') as shopjson:
+            json.dump(self.stock, shopjson)

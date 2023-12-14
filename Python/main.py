@@ -62,16 +62,17 @@ def catchFish(playerName, fishName):
 
 
 #---Here are the Shop & Inventory functions---#
-def stockAsJson():
-    s = Shop.shop()
-    stock = jsonify(s.stock)
-    return stock
+def getStock():
+    return Shop.shop().stock
+
 
 def itemHover(itemStr):
-    print("hovering")
+    return {"result":"hovering"}
 
 def shopBuy(itemStr):
-    print(itemStr)
+    global cursor, cnx
+    res = getStock()
+
 
 def invUse(itemStr):
     print(itemStr)
