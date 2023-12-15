@@ -1,6 +1,6 @@
 'use strict';
 
-let _playerName = "dave";
+let _playerName = "joohn";
 
 async function runFunction(functionName, args) {
     const url = 'http://127.0.0.1:3000/runFunction';
