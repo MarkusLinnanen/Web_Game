@@ -29,7 +29,7 @@ class player:
         return self.cursor.fetchall()[0]
 
     def getString(self):
-        self.cursor.execute("SELECT string.name, breakPercent FROM player, string WHERE player.name = %s AND string.name = player.string", (self.name,))
+        self.cursor.execute("SELECT line.name, breakPercent FROM player, line WHERE player.name = %s AND line.name = player.line", (self.name,))
         return self.cursor.fetchall()[0]
 
     def getPlayer(self):

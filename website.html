@@ -5,6 +5,7 @@
     <title>Web Fish Game</title>
     <script src="JS/website.js" defer></script>
     <link href="Css/website.css" rel="stylesheet">
+
 </head>
 <body>
     <header id="header">
@@ -23,11 +24,26 @@
 
         <div id="game-page" class="maingame">
             <div class="fishing">
+                <div id ="catchBox" class="caughtBox">
+                    <div class="boxinaBox">
+                        <p>You caught a fish!</p>
+                        <div id="caughtBoxText">Ei toimi fucko</div>
+                        <p>Wait a bit before casting your lure.</p>
+                        <button id="releaseCatch" class="closeButton" onclick="closeWinBox()">Release</button>
+                    </div>
+                </div>
+                <div id ="noCatchBox" class="noCaughtBox">
+                    <div class="boxinaBox">
+                        <div class="noCaughtBoxText">Lostlol</div>
+                        <p>Wait a bit before casting your lure.</p>
+                        <button id="closeLose" class="closeButton" onclick="closeLoseBox()">Close</button>
+                    </div>
+                </div>
                 <button class="fishButton" type="button" onclick="startFishing()">Cast your rod</button>
             </div>
-            <div id="footer-box" class="footmenu">
+            <!--<div id="footer-box" class="footmenu">
                 <div class="footerBox"></div>
-            </div>
+            </div>-->
         </div>
 
         <div class="overlay" id="overlay"></div>
@@ -36,7 +52,10 @@
         <div class="secondaryBox" id="invBox">
             <div class="secondaryBoxContent">
                 <h2>Inventory</h2>
-                <p>This is your inventory.</p>
+                <div>
+                <button id = "itemBox01" class="itemBox" style="background-image: url('images/shop/bait/worms.png')"></button>
+                <button id = "itemBox02" class="itemBox" style="background-image: url('images/shop/fishingLine/cheap.png')"></button>
+                </div>
                 <button class="closeButton">Close</button>
             </div>
         </div>
@@ -80,21 +99,23 @@
             <div class="secondaryBoxContent">
                 <h2>Shop</h2>
                 <div>
-                <button id = "itemBox0" class="itemBox" onclick="runFunction('shopBuy', [_playerName, 'Worms'])" style="background-image: url('images/shop/bait/worms.png')"></button>
-                <button id = "itemBox1" class="itemBox" onclick="runFunction('shopBuy', [_playerName, 'Small Lure'])" style="background-image: url('images/shop/bait/smallLure.png')"></button>
-                <button id = "itemBox2" class="itemBox" onclick="runFunction('shopBuy', [_playerName, 'Big Lure'])" style="background-image: url('images/shop/bait/bigLure.png')"></button>
+                <button value = 'Worms' id = "itemBox0" class="itemBox" style="background-image: url('images/shop/bait/worms.png')"></button>
+                <button value = 'Small Lure' id = "itemBox1" class="itemBox" style="background-image: url('images/shop/bait/smallLure.png')"></button>
+                <button value = 'Big Lure' id = "itemBox2" class="itemBox" style="background-image: url('images/shop/bait/bigLure.png')"></button>
                 </div>
                 <div>
-                <button id = "itemBox3" class="itemBox" onclick="runFunction('shopBuy', [_playerName, 'Worn line'])"  style="background-image: url('images/shop/fishingLine/cheap.png')"></button>
-                <button id = "itemBox4" class="itemBox" onclick="runFunction('shopBuy', [_playerName, 'Normal line'])"  style="background-image: url('images/shop/fishingLine/normal.png')"></button>
-                <button id = "itemBox5" class="itemBox" onclick="runFunction('shopBuy', [_playerName, 'Strong line'])"  style="background-image: url('images/shop/fishingLine/expensive.png')"></button>
+                <button value = 'Worn line' id = "itemBox3" class="itemBox"  style="background-image: url('images/shop/fishingLine/cheap.png')"></button>
+                <button value = 'Normal line' id = "itemBox4" class="itemBox" style="background-image: url('images/shop/fishingLine/normal.png')"></button>
+                <button value = 'Strong line' id = "itemBox5" class="itemBox" style="background-image: url('images/shop/fishingLine/expensive.png')"></button>
                 </div>
                 <div>
                 <button id = "itemBox6" class="itemBox"></button>
                 <button id = "itemBox7" class="itemBox"></button>
                 <button id = "itemBox8" class="itemBox"></button>
                 </div>
-                <p>This is the shop.</p>
+                <h1 id = "itemDescName"></h1>
+                <p id = "itemPrice"></p>
+                <p id = "itemDescText" style = ""></p>
                 <button class="closeButton">Close</button>
             </div>
         </div>
@@ -125,7 +146,7 @@
 
 
     </header>
-
-    <div style="text-align: center;"><img id="bgImg" alt="background image" src="" class="bgImg"></div>
+    <audio src="Song/Theme.wav" loop autoplay></audio>
+    <div style="text-align: center;"><img style="width: 100%;"id="bgImg" alt="background image" src="" class="bgImg"></div>
 </body>
 </html>

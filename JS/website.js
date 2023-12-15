@@ -1,5 +1,6 @@
 let fishingAllowed = true;
 let _playerName = "john";
+let stringBroken = false;
 
 /*----Start of progress tab fish data----*/
 async function fetchFishData() {
@@ -36,7 +37,7 @@ async function displayFishData(caughtArr) {
         progressContent.appendChild(fishElement);
         i++;
     });
-    /*---------------------JOS JÄÄ AIKAA
+    /*---------------------
     const footerData = await fetchFishData();
     const footerContent = document.querySelector('.maingame .footmenu .footerBox');
     footerData.forEach(fish =>{
@@ -78,7 +79,7 @@ async function displayFishData(caughtArr) {
             footerElement.appendChild(footerImage);
             footerContent.appendChild(footerElement);
         });
-    });AAKIA ÄÄJ SOJ----------------*/
+    });----------------*/
 }
 
 /*----End of progress tab fish data----*/
@@ -109,21 +110,31 @@ closeButtons.forEach(closeButton => {
 
 /*----Start of fishing functionality----*/
 function startFishing() {
+
     //saat kalaa tai et 50/50
     //käytä catchFish, ei catFish
     runFunction('getPlayerLocation', [_playerName]).then(function(result) {
         let fishingLocation = result["name"];
         if (!fishingAllowed) {
-            console.log("YOU CAN'T FISH NOW FUCKO");
+            console.log("Fishing on cooldown");
             return;
         }
+        if(stringBroken){
+            console.log("String is Broken!");
+            return;
+        }
+        console.log(stringBroken);
         let chance = Math.floor(Math.random() * 10);
         console.log(chance);
         if (chance <= 2) {
             console.log("Sait kalan lol")
             runFunction('catchFish', [_playerName, fishingLocation]).then(function(result){
                 let caughtFish = result["name"];
+                displayWinBox(caughtFish);
             })
+        }
+        else {
+            displayLoseBox();
         }
         fishingAllowed = false;
         setTimeout(() => {
@@ -131,7 +142,49 @@ function startFishing() {
             console.log("You can fish again!");}, 5000);
     });
 }
+
+function displayWinBox(caughtFish) {
+    const catchBox = document.querySelector('.caughtBox')
+    catchBox.style.display = 'block';
+    const fishText = document.getElementById('caughtBoxText')
+    fishText.textContent = "Caught species: " + caughtFish;
+    runFunction('getPlayerString', [_playerName]).then(function(result) {
+        if (Math.random() < result["breakPercent"]){
+            stringBroken = true;
+            runFunction('breakString', [_playerName]).then(function(result) {
+                const breakText = document.getElementById('caughtBoxText')
+                breakText.textContent += "\n" + "Your String Broke!" + "\n" + "Buy a new one at the store";
+            });
+        }
+    });
+}
+function closeWinBox() {
+    const catchBox = document.getElementById('catchBox');
+    catchBox.style.display = 'none';
+}
+
+function displayLoseBox(caughtFish) {
+    const catchBox = document.querySelector('.noCaughtBox')
+    catchBox.style.display = 'block';
+    const text = document.querySelector('.noCaughtBoxText')
+    text.textContent = "You didn't catch a fish!";
+    runFunction('getPlayerString', [_playerName]).then(function(result) {
+        if (Math.random() < result["breakPercent"]){
+            stringBroken = true;
+            runFunction('breakString', [_playerName]).then(function(result) {
+                const brokenText = document.querySelector('.noCaughtBoxText')
+                brokenText.textContent += "\n" + "Your String Broke!" + "\n" + "Buy a new one at the store";
+            });
+        }
+    });
+}
+function closeLoseBox() {
+    const catchBox = document.getElementById('noCatchBox');
+    catchBox.style.display = 'none';
+}
 /*----End of fishing functionality----*/
+
+
 
 /*----Start of map button function----*/
 async function runFunction(functionName, args) {
@@ -170,35 +223,51 @@ function updateMoney(){
     });
 }
 
-function handleHover() {
-    console.log('Button is being hovered!');
-    // Add your custom code here
-}
 
-function updateProgress(){
-    runFunction('getCaughtTable', [_playerName]).then(function(res){
-        displayFishData(res);
-    });
-}
-
+let shopFocus = "";
 document.addEventListener('DOMContentLoaded', () => {
+    // Run login function
     runFunction('login', [_playerName]).then(function(result2){
+        // Run getCaughtTable function
         runFunction('getCaughtTable', [_playerName]).then(function(result3){
-            let out
+            let out;
+
+            // Run getPlayerLocation function
             runFunction("getPlayerLocation", [_playerName]).then(function(result4){
                 out = result3;
+
+                // Display fish data and set background image
                 displayFishData(out).then(function(r){
-                    for (let i = 0; i < 9; i++) {
+                    for (let i = 0; i < 6; i++) {
                         const shopButton = document.getElementById('itemBox' + i.toString());
-                        if (shopButton)
-                            shopButton.addEventListener('mouseover', handleHover);
+
+                        // Add event listener to each shop button
+                        if (shopButton) {
+                            shopButton.addEventListener('mousedown', (function(){
+                                if (shopFocus !== shopButton.value){
+                                    shopFocus = shopButton.value;
+                                    runFunction('getItemInfo', [shopFocus]).then(function(desc){
+                                        document.getElementById("itemDescName").innerHTML = desc["name"];
+                                        document.getElementById("itemPrice").innerHTML = "Price: " + desc["price"];
+                                        document.getElementById("itemDescText").innerHTML = desc["description"];
+                                    });
+                                }
+                                else{
+                                    runFunction('shopBuy', [_playerName, shopFocus]).then(function(buyResult) {
+
+                                        stringBroken = !(buyResult["line"] || buyResult["bait"]);
+                                        updateMoney();
+                                    });
+                                }
+                            }));
+                        }
                     }
 
+                    // Set background image based on player location
                     setBgImage(result4["imageLink"]);
                 });
             });
         });
     });
 });
-
 /*----End of map button function----*/

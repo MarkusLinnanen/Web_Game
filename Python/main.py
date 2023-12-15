@@ -57,13 +57,7 @@ def setPlayerMoney(playerName, moneyAmount):
 def fishInfo():
     global cursor
     cursor.execute("SELECT * FROM fish")
-
-    retList = cursor.fetchall()
-    retDict = {}
-    for val in retList:
-        retDict.update(val)
-
-    return retDict
+    return cursor.fetchall()
 
 def getCaughtTable(playerName):
     global cursor
@@ -92,17 +86,42 @@ def getStock():
     global cursor, cnx
     return Shop.shop(cursor, cnx).stock
 
-def itemHover(itemStr):
-    return {"result":"hovering"}
-
-def shopBuy(playerName, itemStr):
+def getItemInfo(itemStr):
     global cursor, cnx
     stck = getStock()
     for itm in stck["items"]:
         if itm["name"] == itemStr:
-            return setPlayerMoney(playerName, -itm["price"])
-    return getPlayerMoney(playerName)
+            return itm
+    return {"description": "not found"}
 
+def shopBuy(playerName, itemStr):
+    global cursor, cnx
+    stck = getStock()
+    playerMoney = getPlayerMoney(playerName)["money"]
+    for itm in stck["items"]:
+        if itm["name"] == itemStr and playerMoney >= itm["price"]:
+            if not getStringAndBait(playerName)[itm["type"]]:
+                match(itm["type"]):
+                    case "bait":
+                        cursor.execute("UPDATE player SET bait = %s WHERE name = %s", (itm["name"], playerName))
+                    case "line":
+                        cursor.execute("UPDATE player SET line = %s WHERE name = %s", (itm["name"], playerName))
+
+                cnx.commit()
+                return getStringAndBait(playerName)
+
+    return playerMoney
+
+def breakString(playerName):
+    global cursor, cnx
+    cursor.execute("UPDATE player SET line = %s, bait = %s WHERE name = %s", ('', '', playerName))
+    cnx.commit()
+    return {"line": "", "bait": ""}
+
+def getStringAndBait(playerName):
+    global cursor
+    cursor.execute("SELECT line, bait FROM player WHERE name = %s", (playerName,))
+    return cursor.fetchall()[0]
 
 def closeSite():
     global cursor, cnx

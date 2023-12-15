@@ -22,15 +22,11 @@ ul {
 }
 
 /*----Fishing----*/
-
-.fishing {
+.fishButton {
     position: fixed;
     top: 75%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-
-.fishButton {
     cursor: pointer;
     display: inline-block;
     font-size: 16px;
@@ -48,6 +44,76 @@ ul {
 }
 
 .fishButton:active {
+    background-color: darkolivegreen;
+}
+
+#catchBox {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 2rem;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.8);
+}
+
+#noCatchBox {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 2rem;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.8);
+}
+
+.boxinaBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#releaseCatch {
+    margin-top: 2rem;
+}
+
+#closeLose {
+    margin-top: 2rem;
+}
+
+.caughtBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.noCaughtBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.closeButton {
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 0.5rem;
+    background-color: #AFC8AD;
+}
+
+.closeButton:hover {
+  box-shadow: 0 12px 12px 0 rgba(0,0,0,0.24), 0 17px 40px 0 rgba(0,0,0,0.19);
+  background-color: #88AB8E;
+}
+
+.closeButton:active {
     background-color: darkolivegreen;
 }
 
@@ -323,19 +389,7 @@ ul {
     height: 100px;
 }
 
-.buyButton{
-    margin : 5px 5px;
-    cursor: pointer;
-    border: 1px solid black;
-    border-radius: 4px;
-    padding: 0.5rem;
-    background-color: #AFC8AD;
-}
-.buyButton:hover {
-  box-shadow: 0 12px 12px 0 rgba(0,0,0,0.24), 0 17px 40px 0 rgba(0,0,0,0.19);
-  background-color: #88AB8E;
+#shoBox{
+    width : 24vw;
 }
 
-.buyButton:active {
-    background-color: darkolivegreen;
-}

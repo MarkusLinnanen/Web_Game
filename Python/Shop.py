@@ -12,7 +12,7 @@ class shop:
         cursor.execute("SELECT * FROM line", {})
         strings = cursor.fetchall()
         for string in strings:
-            string.update({"type": "string"})
+            string.update({"type": "line"})
             self.stock["items"].append(string)
 
         self.stock["itemCount"] = len(self.stock["items"])

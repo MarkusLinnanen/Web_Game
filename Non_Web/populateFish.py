@@ -20,7 +20,15 @@ def fillFishTable(fishDict):
         cursor.execute("INSERT INTO fish (name, imageLink, country, ID) VALUES (%s, %s, %s, %s)", (i["name"], i["img_src_set"]["1.5x"], "Finland", i["id"]))
     cnx.commit()
 
+def fillFishLinks(fishDict):
+    global cursor, cnx
+    #cursor.execute("DELETE FROM fish")
+    cnx.commit
+    for i in fishDict:
+        cursor.execute("UPDATE fish SET wikipediaLink = %s", (i["url"],))
+    cnx.commit()
+
 
 gfd = getFishDict()
 print(gfd)
-fillFishTable(gfd)
+fillFishLinks(gfd)
