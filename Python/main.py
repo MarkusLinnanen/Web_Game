@@ -97,15 +97,21 @@ def getItemInfo(itemStr):
 def shopBuy(playerName, itemStr):
     global cursor, cnx
     stck = getStock()
-    playerMoney = getPlayerMoney(playerName)["money"]
+    playerMoney = getPlayerMoney(playerName)
     for itm in stck["items"]:
-        if itm["name"] == itemStr and playerMoney >= itm["price"]:
-            if not getStringAndBait(playerName)[itm["type"]]:
+        if itm["name"] == itemStr and playerMoney["money"] >= itm["price"]:
+            snb = getStringAndBait(playerName)
+            print(snb[itm["type"]])
+            if not snb[itm["type"]]:
                 match(itm["type"]):
                     case "bait":
                         cursor.execute("UPDATE player SET bait = %s WHERE name = %s", (itm["name"], playerName))
+                        setPlayerMoney(playerName, -itm["price"])
+                        break
                     case "line":
                         cursor.execute("UPDATE player SET line = %s WHERE name = %s", (itm["name"], playerName))
+                        setPlayerMoney(playerName, -itm["price"])
+                        break
 
                 cnx.commit()
                 return getStringAndBait(playerName)
@@ -117,6 +123,13 @@ def breakString(playerName):
     cursor.execute("UPDATE player SET line = %s, bait = %s WHERE name = %s", ('', '', playerName))
     cnx.commit()
     return {"line": "", "bait": ""}
+
+def isBroken(playerName):
+    stringAndBait = getStringAndBait(playerName)
+    if not (stringAndBait["bait"] and stringAndBait["line"]):
+        return {"isBroken" : True}
+    else:
+        return {"isBroken" : False}
 
 def getStringAndBait(playerName):
     global cursor

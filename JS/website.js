@@ -223,51 +223,58 @@ function updateMoney(){
     });
 }
 
+// Code is messy and objectively unclean due to nested function.then, done to not overlap async functions
+// Could have been done better with planning and making a non async version of the function but it is a bit too late for that
 
 let shopFocus = "";
 document.addEventListener('DOMContentLoaded', () => {
     // Run login function
     runFunction('login', [_playerName]).then(function(result2){
-        // Run getCaughtTable function
-        runFunction('getCaughtTable', [_playerName]).then(function(result3){
-            let out;
-
-            // Run getPlayerLocation function
-            runFunction("getPlayerLocation", [_playerName]).then(function(result4){
+        // Get if string was  broken in past plays
+        runFunction('isBroken', [_playerName]).then(function(result){
+        stringBroken = result["isBroken"]
+            // Run getCaughtTable function
+            runFunction('getCaughtTable', [_playerName]).then(function(result3){
+                let out;
                 out = result3;
+                // Run getPlayerLocation function
+                runFunction("getPlayerLocation", [_playerName]).then(function(result4){
 
-                // Display fish data and set background image
-                displayFishData(out).then(function(r){
-                    for (let i = 0; i < 6; i++) {
-                        const shopButton = document.getElementById('itemBox' + i.toString());
+                    // Display fish data and set background image
+                    displayFishData(out).then(function(r){
+                        for (let i = 0; i < 6; i++) {
+                            const shopButton = document.getElementById('itemBox' + i.toString());
 
-                        // Add event listener to each shop button
-                        if (shopButton) {
-                            shopButton.addEventListener('mousedown', (function(){
-                                if (shopFocus !== shopButton.value){
-                                    shopFocus = shopButton.value;
-                                    runFunction('getItemInfo', [shopFocus]).then(function(desc){
-                                        document.getElementById("itemDescName").innerHTML = desc["name"];
-                                        document.getElementById("itemPrice").innerHTML = "Price: " + desc["price"];
-                                        document.getElementById("itemDescText").innerHTML = desc["description"];
-                                    });
-                                }
-                                else{
-                                    runFunction('shopBuy', [_playerName, shopFocus]).then(function(buyResult) {
+                            // Add event listener to each shop button
+                            if (shopButton) {
+                                shopButton.addEventListener('mousedown', (function(){
+                                    if (shopFocus !== shopButton.value){
+                                        shopFocus = shopButton.value;
+                                        console.log(shopButton.value);
+                                        runFunction('getItemInfo', [shopFocus]).then(function(desc){
+                                            document.getElementById("itemDescName").innerHTML = desc["name"];
+                                            document.getElementById("itemPrice").innerHTML = "Price: " + desc["price"];
+                                            document.getElementById("itemDescText").innerHTML = desc["description"];
+                                        });
+                                    }
+                                    else{
+                                        runFunction('shopBuy', [_playerName, shopFocus]).then(function(buyResult) {
 
-                                        stringBroken = !(buyResult["line"] || buyResult["bait"]);
-                                        updateMoney();
-                                    });
-                                }
-                            }));
+                                            stringBroken = !(buyResult["line"] || buyResult["bait"]);
+                                            updateMoney();
+                                        });
+                                    }
+                                }));
+                            }
                         }
-                    }
 
-                    // Set background image based on player location
-                    setBgImage(result4["imageLink"]);
+                        // Set background image based on player location
+                        setBgImage(result4["imageLink"]);
+                    });
                 });
             });
         });
     });
 });
+
 /*----End of map button function----*/
